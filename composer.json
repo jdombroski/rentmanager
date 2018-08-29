@@ -1,0 +1,12 @@
+{
+    "name":"jeffjtd745/rentmanager",
+    "description": "Rent Manager SDK for PHP",
+    "autoload":{
+       "psr-4":{
+          "RentManager\\":"src/"
+       }
+    },
+    "require": {
+        "guzzlehttp/guzzle": "^6.3"
+      }
+ }
