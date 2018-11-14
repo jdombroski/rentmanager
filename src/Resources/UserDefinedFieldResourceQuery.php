@@ -1,27 +1,104 @@
-<?php
+<?php 
 
 namespace RentManager\Resources;
-use RentManager\Resources\Base\UserDefinedFieldResourceQuery as BaseUserDefinedFieldResourceQuery;
 
+use RentManager\Runtime\BaseResourceQuery;
 
 /**
  * Rent Manager UserDefinedField resource.
  */
-class UserDefinedFieldResourceQuery extends BaseUserDefinedFieldResourceQuery
+class UserDefinedFieldResourceQuery extends BaseResourceQuery
 {
-    /**
-     * Retrieve the lease id user defined value.
-     * @return \RentManager\Models\UserDefinedValue
-     */
-    public function retrieveLeaseId() {
-        return $this->filterByName("LEASE ID")->retrieveCollection()[0];
+    public function getModelClass() 
+    {
+        return "\RentManager\Models\UserDefinedField";
     }
 
     /**
-     * Retrieve the resident id user defined value.
-     * @return \RentManager\Models\UserDefinedValue
+	 * Create a new instance of a UserDefinedField resource query.
+     * @param  string $resourceUrl The url of the resource query.
+	 * @return  UserDefinedFieldResourceQuery
+	 */
+    public static function create($resourceUrl) 
+    {
+        return parent::create($resourceUrl);
+    }
+    
+    
+    
+    /**
+    * Filter resource by the [UserDefinedFieldID] field.
+    * @return  UserDefinedFieldResourceQuery
+    */
+    public function filterByUserDefinedFieldID($value, $operator = "=") 
+    {
+        $this->addFilter("UserDefinedFieldID", $value, $operator);
+        return $this;
+    }
+
+    
+    
+    
+    /**
+    * Filter resource by the [SortOrder] field.
+    * @return  UserDefinedFieldResourceQuery
+    */
+    public function filterBySortOrder($value, $operator = "=") 
+    {
+        $this->addFilter("SortOrder", $value, $operator);
+        return $this;
+    }
+
+    
+    
+    
+    /**
+    * Filter resource by the [Name] field.
+    * @return  UserDefinedFieldResourceQuery
+    */
+    public function filterByName($value, $operator = "=") 
+    {
+        $this->addFilter("Name", $value, $operator);
+        return $this;
+    }
+
+    
+    
+            
+    /**
+    * Embed the related [IsRequired] resource.
+    * @return  UserDefinedFieldResourceQuery
+    */
+    public function embedIsRequired() {
+
+        $this->addEmbed("IsRequired");
+        return $this;
+    }
+    
+    
+    
+    /**
+	 * Save a UserDefinedField model or collection to the Rent Manager API.
+	 * @param  \RentManager\Models\UserDefinedField|\RentManager\Models\UserDefinedField[] $model
+     * @return  \RentManager\Models\UserDefinedField|\RentManager\Models\UserDefinedField[]
+	 */
+    public function save($model) {
+        return parent::save($model);
+    }
+
+    /**
+	 * Retrieve an instance of a UserDefinedField from the Rent Manager API.
+	 * @return  \RentManager\Models\UserDefinedField
+	 */
+    public function retrieveInstance() {
+        return parent::retrieveInstance();
+    }
+
+    /**
+     * Retrieve a UserDefinedField collection from the Rent Manager API.
+     * @return  \RentManager\Models\UserDefinedField[]
      */
-    public function retrieveResidentId() {
-        return $this->filterByName("RESIDENT ID")->retrieveCollection()[0];
+    public function retrieveCollection() {
+        return parent::retrieveCollection();
     }
 }

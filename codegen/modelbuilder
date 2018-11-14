@@ -1,5 +1,0 @@
-<?php 
-
-require __DIR__ . "/ModelBuilder.php";
-
-\ModelBuilder\ModelBuilder::buildAll(__DIR__ . "/../schema/rentmanager.xml");

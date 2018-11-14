@@ -1,13 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<models namespace="RentManager" base="RentManager\Models\BaseModel">
-
-  <model name="UserAuthorization" resourceUrl="Authentication/AuthorizeUser" namespace="Authentication">
-    <property name="Username" type="string" />
-    <property name="Password" type="string" />
-    <property name="LocationID" type="integer" />
-  </model>
+<models>
   
-  <model name="Property" resourceUrl="Properties">
+  <model name="Property">
     <property name="PropertyID" type="integer" key="true" />
     <property name="Name" type="string" />
     <property name="ShortName" type="string" />
@@ -17,20 +11,20 @@
     <property name="IsActive" type="bool" />
     <property name="IsCommercial" type="bool" />
     <property name="PropertyType" type="string" />
-    <property name="Units" type="\RentManager\Models\Unit[]" local="PropertyID" foreign="PropertyID" />
+    <property name="Units" type="Property[]" />
   </model>
   
-  <model name="Unit" resourceUrl="Units">
+  <model name="Unit">
     <property name="UnitID" type="integer" key="true" />
     <property name="PropertyID" type="integer" />
     <property name="Name" type="string" />
     <property name="Comment" type="string" />
 
-    <property name="Property" type="\RentManager\Models\Property" />
-    <property name="UserDefinedValues" type="\RentManager\Models\UserDefinedValue[]" />
+    <property name="Property" type="Property" />
+    <property name="UserDefinedValues" type="UserDefinedValue[]" />
   </model>
 
-  <model name="Tenant" resourceUrl="Tenants">
+  <model name="Tenant">
     <property name="TenantID" type="integer" key="true" />
     <property name="TenantDisplayID" type="integer" />
     <property name="Name" type="string" />
@@ -49,18 +43,17 @@
     <property name="DoNotAcceptPayments" type="bool" />
     <property name="IsProspect" type="bool" />
 
-    <!-- Embedded Only -->
-    <property name="Property" type="\RentManager\Models\Property" />
-    <property name="Leases" type="\RentManager\Models\Lease[]" />
-    <property name="WebUserAccounts" type="\RentManager\Models\WebUserAccount[]" />
-    <property name="PrimaryContact" type="\RentManager\Models\Contact" />
-    <property name="UserDefinedValues" type="\RentManager\Models\UserDefinedValue[]" />
+    <property name="Property" type="Property" />
+    <property name="Leases" type="Lease[]" />
+    <property name="WebUserAccounts" type="WebUserAccount[]" />
+    <property name="PrimaryContact" type="Contact" />
+    <property name="UserDefinedValues" type="UserDefinedValue[]" />
     <property name="Balance" type="double" />
-    <property name="Charges" type="\RentManager\Models\Charge[]" />
-    <property name="RecurringCharges" type="\RentManager\Models\RecurringCharge[]" />
+    <property name="Charges" type="Charge[]" />
+    <property name="RecurringCharges" type="RecurringCharge[]" />
   </model>
   
-  <model name="Prospect" resourceUrl="Prospects">
+  <model name="Prospect">
     <property name="ProspectID" type="integer" key="true" />
     <property name="ProspectDisplayID" type="integer" />
     <property name="PropertyID" type="integer" />
@@ -70,26 +63,26 @@
     <property name="MoveInDate" type="DateTime" />
     <property name="MoveOutDate" type="DateTime" />
 
-    <property name="Property" type="\RentManager\Models\Property" />
-    <property name="PrimaryContact" type="\RentManager\Models\Contact" />
-    <property name="UserDefinedValues" type="\RentManager\Models\UserDefinedValue[]" />
+    <property name="Property" type="Property" />
+    <property name="PrimaryContact" type="Contact" />
+    <property name="UserDefinedValues" type="UserDefinedValue[]" />
   </model>
 
-  <model name="UserDefinedField" resourceUrl="UserDefinedFields">
+  <model name="UserDefinedField">
     <property name="UserDefinedFieldID" type="integer" key="true" />
     <property name="SortOrder" type="integer" />
     <property name="Name" type="string" />
     <property name="IsRequired" type="boolean" />
   </model>
   
-  <model name="UserDefinedValue" resourceUrl="UserDefinedValues">
+  <model name="UserDefinedValue">
     <property name="UserDefinedFieldID" type="integer" key="true" />
     <property name="ParentID" type="integer" />
     <property name="Name" type="string" />
     <property name="Value" type="string" />
   </model>
 
-  <model name="Contact" resourceUrl="Contacts">
+  <model name="Contact">
     <property name="ContactID" type="integer" key="true" />
     <property name="FirstName" type="string" />
     <property name="LastName" type="string" />
@@ -98,18 +91,18 @@
     <property name="ParentID" type="integer" />
     <property name="ContactTypeID" type="integer" />
 
-    <property name="Tenant" type="\RentManager\Models\Tenant" />
+    <property name="Tenant" type="Tenant" />
     <property name="PhoneNumbers" type="\RentManager\PhoneNumber[]" />
-    <property name="UserDefinedValues" type="\RentManager\Models\UserDefinedValue[]" />
+    <property name="UserDefinedValues" type="UserDefinedValue[]" />
   </model>
 
-  <model name="ContactType" resourceUrl="ContactTypes">
+  <model name="ContactType">
     <property name="ContactTypeID" type="integer" key="true" />
     <property name="Name" type="string" />
     <property name="Description" type="string" />
   </model>
   
-  <model name="PhoneNumber" resourceUrl="PhoneNumbers">
+  <model name="PhoneNumber">
     <property name="PhoneNumberID" type="integer" key="true" />
     <property name="PhoneNumberTypeID" type="integer" />
     <property name="PhoneNumber" type="string" />
@@ -121,7 +114,7 @@
     <property name="ParentType" type="integer" />
   </model>
 
-  <model name="Lease" resourceUrl="Leases">
+  <model name="Lease">
     <property name="LeaseID" type="integer" key="true" />
     <property name="TenantID" type="integer" />
     <property name="UnitID" type="integer" />
@@ -129,13 +122,13 @@
     <property name="MoveInDate" type="DateTime" />
     <property name="MoveOutDate" type="DateTime" />
 
-    <property name="Property" type="\RentManager\Models\Property" />
-    <property name="Unit" type="\RentManager\Models\Unit" />
-    <property name="Tenant" type="\RentManager\Models\Tenant" />
-    <property name="ActiveLeaseRenewal" type="\RentManager\Models\LeaseRenewal" />
+    <property name="Property" type="Property" />
+    <property name="Unit" type="Unit" />
+    <property name="Tenant" type="Tenant" />
+    <property name="ActiveLeaseRenewal" type="LeaseRenewal" />
   </model>
 
-  <model name="LeaseRenewal" resourceUrl="LeaseRenewals">
+  <model name="LeaseRenewal">
     <property name="LeaseRenewalID" type="integer" key="true" />
     <property name="ParentLeaseID" type="integer" />
     <property name="UnitID" type="integer" />
@@ -144,12 +137,12 @@
     <property name="StartDate" type="DateTime" />
     <property name="EndDate" type="DateTime" />
 
-    <property name="Property" type="\RentManager\Models\Property" />
-    <property name="Unit" type="\RentManager\Models\Unit" />
-    <property name="Tenant" type="\RentManager\Models\Tenant" />
+    <property name="Property" type="Property" />
+    <property name="Unit" type="Unit" />
+    <property name="Tenant" type="Tenant" />
   </model>
 
-  <model name="WebUserAccount" resourceUrl="WebUserAccounts">
+  <model name="WebUserAccount">
     <property name="WebUserAccountID" type="integer" key="true" />
     <property name="WebUserID" type="integer" />
     <property name="AccountID" type="integer" />
@@ -162,7 +155,7 @@
     <property name="Tenant" type="Tenant" />
   </model>
 
-  <model name="Charge" resourceUrl="Charges">
+  <model name="Charge">
     <property name="ChargeID" type="integer" key="true" />
     <property name="ID" type="integer" />
     <property name="ChargeTypeID" type="integer" />
@@ -175,7 +168,7 @@
     <property name="CreateDate" type="DateTime" />
   </model>
 
-  <model name="RecurringCharge" resourceUrl="RecurringCharges">
+  <model name="RecurringCharge">
     <property name="RecurringChargeID" type="integer" key="true" />
     <property name="UnitID" type="integer" />
     <property name="Frequency" type="integer" />
@@ -189,9 +182,25 @@
     <property name="UpdateDate" type="DateTime" />
   </model>
   
-  <model name="ChargeType" resourceUrl="ChargeTypes">
+  <model name="ChargeType">
     <property name="ChargeTypeID" type="integer" key="true" />
     <property name="Name" type="string" />
     <property name="Description" type="string" />
+  </model>
+
+  <model name="Payment">
+    <property name="ID" type="integer" key="true" />
+    <property name="AccountID" type="integer" />
+    <property name="TransactionType" type="string" />
+    <property name="AmountAllocated" type="decimal" />
+    <property name="IsFullyAllocated" type="bool" />
+    <property name="IsSecurityDepositPriorToGLStartDate" type="bool" />
+    <property name="ReceiptID" type="integer" />
+    <property name="ReversalDate" type="DateTime" />
+    <property name="Amount" type="double" />
+    <property name="Comment" type="string" />
+    <property name="TransactionDate" type="DateTime" />
+    <property name="CreateDate" type="DateTime" />
+    <property name="UpdateDate" type="DateTime" />
   </model>
 </models>

@@ -1,12 +1,25 @@
 {
-    "name":"jeffjtd745/rentmanager",
+    "name":"jdombroski/RentManager",
     "description": "Rent Manager SDK for PHP",
     "autoload":{
        "psr-4":{
-          "RentManager\\":"src/"
+          "RentManager\\":"src/",
+          "Tests\\": "tests/output"
        }
     },
     "require": {
-        "guzzlehttp/guzzle": "^6.3"
-      }
+        "guzzlehttp/guzzle": "^6.3@dev",
+        "jenssegers/blade": "dev-master",
+        "monolog/monolog": "1.x-dev",
+        "phpunit/phpunit": "5.7.x-dev",
+        "symfony/yaml": "3.4.x-dev"
+    },
+    "config": {
+        "platform": {
+            "php": "5.6.4"
+        },
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
+    "minimum-stability": "dev"
  }
