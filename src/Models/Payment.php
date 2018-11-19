@@ -17,7 +17,7 @@ class Payment extends BaseModel
         "ID" => "integer",
         "AccountID" => "integer",
         "TransactionType" => "string",
-        "AmountAllocated" => "decimal",
+        "AmountAllocated" => "double",
         "IsFullyAllocated" => "bool",
         "IsSecurityDepositPriorToGLStartDate" => "bool",
         "ReceiptID" => "integer",
@@ -128,7 +128,7 @@ class Payment extends BaseModel
     
     /**
 	 * Get the [AmountAllocated] field.
-	 * @return  decimal
+	 * @return  double
 	 */
 	public function getAmountAllocated() {
         return isset($this->container['AmountAllocated']) ? $this->container['AmountAllocated'] : null;
@@ -136,7 +136,7 @@ class Payment extends BaseModel
 
 	/**
 	 * Set the [AmountAllocated] field.
-     * @param    decimal $amountAllocated
+     * @param    double $amountAllocated
      * @return  Payment
 	 */
 	public function setAmountAllocated($amountAllocated) {

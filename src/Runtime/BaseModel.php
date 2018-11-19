@@ -45,7 +45,7 @@ abstract class BaseModel
                 //  Final value to use with setter.
                 $finalVal = null;
 
-                if(in_array(static::getTypes()[$prop], ["string", "integer", "bool", "double", "decimal"])) {
+                if(in_array(static::getTypes()[$prop], ["string", "integer", "bool", "double"])) {
 
                     settype($val, static::getTypes()[$prop]);
 

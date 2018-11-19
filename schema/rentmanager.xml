@@ -193,7 +193,7 @@
     <property name="ID" type="integer" key="true" />
     <property name="AccountID" type="integer" />
     <property name="TransactionType" type="string" />
-    <property name="AmountAllocated" type="decimal" />
+    <property name="AmountAllocated" type="double" />
     <property name="IsFullyAllocated" type="bool" />
     <property name="IsSecurityDepositPriorToGLStartDate" type="bool" />
     <property name="ReceiptID" type="integer" />
