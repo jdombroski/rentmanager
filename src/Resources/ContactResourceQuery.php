@@ -165,18 +165,18 @@ class ContactResourceQuery extends BaseResourceQuery
     }
 
     /**
-	 * Retrieve an instance of a Contact from the Rent Manager API.
+	 * Find one Contact from the Rent Manager API.
 	 * @return  \RentManager\Models\Contact
 	 */
-    public function retrieveInstance() {
-        return parent::retrieveInstance();
+    public function findOne() {
+        return parent::findOne();
     }
 
     /**
-     * Retrieve a Contact collection from the Rent Manager API.
+     * Find a Contact collection from the Rent Manager API.
      * @return  \RentManager\Models\Contact[]
      */
-    public function retrieveCollection() {
-        return parent::retrieveCollection();
+    public function find() {
+        return parent::find();
     }
 }

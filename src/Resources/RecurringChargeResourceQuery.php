@@ -178,18 +178,18 @@ class RecurringChargeResourceQuery extends BaseResourceQuery
     }
 
     /**
-	 * Retrieve an instance of a RecurringCharge from the Rent Manager API.
+	 * Find one RecurringCharge from the Rent Manager API.
 	 * @return  \RentManager\Models\RecurringCharge
 	 */
-    public function retrieveInstance() {
-        return parent::retrieveInstance();
+    public function findOne() {
+        return parent::findOne();
     }
 
     /**
-     * Retrieve a RecurringCharge collection from the Rent Manager API.
+     * Find a RecurringCharge collection from the Rent Manager API.
      * @return  \RentManager\Models\RecurringCharge[]
      */
-    public function retrieveCollection() {
-        return parent::retrieveCollection();
+    public function find() {
+        return parent::find();
     }
 }

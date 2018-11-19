@@ -204,18 +204,18 @@ class PaymentResourceQuery extends BaseResourceQuery
     }
 
     /**
-	 * Retrieve an instance of a Payment from the Rent Manager API.
+	 * Find one Payment from the Rent Manager API.
 	 * @return  \RentManager\Models\Payment
 	 */
-    public function retrieveInstance() {
-        return parent::retrieveInstance();
+    public function findOne() {
+        return parent::findOne();
     }
 
     /**
-     * Retrieve a Payment collection from the Rent Manager API.
+     * Find a Payment collection from the Rent Manager API.
      * @return  \RentManager\Models\Payment[]
      */
-    public function retrieveCollection() {
-        return parent::retrieveCollection();
+    public function find() {
+        return parent::find();
     }
 }

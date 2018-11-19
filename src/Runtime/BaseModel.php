@@ -63,14 +63,15 @@ abstract class BaseModel
 
                     $type = str_replace("[]", "", static::getTypes()[$prop]);     //  Get property object type.
                     $propertyIsArray = strpos(static::getTypes()[$prop], "[]") !== false; //  Test if property is an array.
+                    $class = "RentManager\\Models\\{$type}";
 
                     if($propertyIsArray) {
                         $finalVal = [];
                         foreach($val as $sub_data) {
-                            $finalVal[] = call_user_func("{$type}::create", $sub_data);
+                            $finalVal[] = call_user_func("{$class}::create", $sub_data);
                         }
                     } else {
-                        $finalVal = call_user_func("{$type}::create", $val);
+                        $finalVal = call_user_func("{$class}::create", $val);
                     }
 
                 }

@@ -165,18 +165,18 @@ class ChargeResourceQuery extends BaseResourceQuery
     }
 
     /**
-	 * Retrieve an instance of a Charge from the Rent Manager API.
+	 * Find one Charge from the Rent Manager API.
 	 * @return  \RentManager\Models\Charge
 	 */
-    public function retrieveInstance() {
-        return parent::retrieveInstance();
+    public function findOne() {
+        return parent::findOne();
     }
 
     /**
-     * Retrieve a Charge collection from the Rent Manager API.
+     * Find a Charge collection from the Rent Manager API.
      * @return  \RentManager\Models\Charge[]
      */
-    public function retrieveCollection() {
-        return parent::retrieveCollection();
+    public function find() {
+        return parent::find();
     }
 }

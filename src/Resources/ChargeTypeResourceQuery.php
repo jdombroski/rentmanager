@@ -74,18 +74,18 @@ class ChargeTypeResourceQuery extends BaseResourceQuery
     }
 
     /**
-	 * Retrieve an instance of a ChargeType from the Rent Manager API.
+	 * Find one ChargeType from the Rent Manager API.
 	 * @return  \RentManager\Models\ChargeType
 	 */
-    public function retrieveInstance() {
-        return parent::retrieveInstance();
+    public function findOne() {
+        return parent::findOne();
     }
 
     /**
-     * Retrieve a ChargeType collection from the Rent Manager API.
+     * Find a ChargeType collection from the Rent Manager API.
      * @return  \RentManager\Models\ChargeType[]
      */
-    public function retrieveCollection() {
-        return parent::retrieveCollection();
+    public function find() {
+        return parent::find();
     }
 }

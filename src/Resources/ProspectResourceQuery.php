@@ -178,18 +178,18 @@ class ProspectResourceQuery extends BaseResourceQuery
     }
 
     /**
-	 * Retrieve an instance of a Prospect from the Rent Manager API.
+	 * Find one Prospect from the Rent Manager API.
 	 * @return  \RentManager\Models\Prospect
 	 */
-    public function retrieveInstance() {
-        return parent::retrieveInstance();
+    public function findOne() {
+        return parent::findOne();
     }
 
     /**
-     * Retrieve a Prospect collection from the Rent Manager API.
+     * Find a Prospect collection from the Rent Manager API.
      * @return  \RentManager\Models\Prospect[]
      */
-    public function retrieveCollection() {
-        return parent::retrieveCollection();
+    public function find() {
+        return parent::find();
     }
 }

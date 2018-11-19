@@ -165,18 +165,18 @@ class PropertyResourceQuery extends BaseResourceQuery
     }
 
     /**
-	 * Retrieve an instance of a Property from the Rent Manager API.
+	 * Find one Property from the Rent Manager API.
 	 * @return  \RentManager\Models\Property
 	 */
-    public function retrieveInstance() {
-        return parent::retrieveInstance();
+    public function findOne() {
+        return parent::findOne();
     }
 
     /**
-     * Retrieve a Property collection from the Rent Manager API.
+     * Find a Property collection from the Rent Manager API.
      * @return  \RentManager\Models\Property[]
      */
-    public function retrieveCollection() {
-        return parent::retrieveCollection();
+    public function find() {
+        return parent::find();
     }
 }

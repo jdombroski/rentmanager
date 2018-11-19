@@ -350,6 +350,19 @@ class TenantResourceQuery extends BaseResourceQuery
     
     
     
+            
+    /**
+    * Embed the related [Payments] resource.
+    * @return  TenantResourceQuery
+    */
+    public function embedPayments() {
+
+        $this->addEmbed("Payments");
+        return $this;
+    }
+    
+    
+    
     /**
 	 * Save a Tenant model or collection to the Rent Manager API.
 	 * @param  \RentManager\Models\Tenant|\RentManager\Models\Tenant[] $model
@@ -360,18 +373,18 @@ class TenantResourceQuery extends BaseResourceQuery
     }
 
     /**
-	 * Retrieve an instance of a Tenant from the Rent Manager API.
+	 * Find one Tenant from the Rent Manager API.
 	 * @return  \RentManager\Models\Tenant
 	 */
-    public function retrieveInstance() {
-        return parent::retrieveInstance();
+    public function findOne() {
+        return parent::findOne();
     }
 
     /**
-     * Retrieve a Tenant collection from the Rent Manager API.
+     * Find a Tenant collection from the Rent Manager API.
      * @return  \RentManager\Models\Tenant[]
      */
-    public function retrieveCollection() {
-        return parent::retrieveCollection();
+    public function find() {
+        return parent::find();
     }
 }

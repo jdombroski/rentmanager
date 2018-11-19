@@ -111,6 +111,18 @@ abstract class BaseResourceQuery implements Resource
     }
 
     /**
+     * Add a filter to the resource query.
+     * @param string $field
+     * @param string $value
+     * @param string $operator
+     */
+    public function filterBy($field, $value, $operator = "=")
+    {
+        $this->addFilter($field, $value, $operator);
+        return $this;
+    }
+
+    /**
      * Get parameters for resource query.
      * @return string[]
      */
@@ -161,11 +173,11 @@ abstract class BaseResourceQuery implements Resource
     }
 
     /**
-     * Retrieve a collection of models.
+     * Find models matching the filters.
      * @param mixed $filters
      * @return mixed[]
      */
-    public function retrieveCollection() {
+    public function find() {
 
         $res = Client::instance()->request("GET", $this->resourceUrl, $this->getParameters());
         $data = json_decode($res->getBody(), true);
@@ -182,12 +194,18 @@ abstract class BaseResourceQuery implements Resource
     }
 
     /**
-     * Retreive an instance of the model.
+     * Find the first instance of a model.
      * @return mixed
      */
-    public function retrieveInstance() {
+    public function findOne() {
         $res = Client::instance()->request("GET", $this->resourceUrl, $this->getParameters());
         $data = json_decode($res->getBody(), true);
+
+        //  Handle array of 1 response.
+        if(isset($data[0])) {
+            $data = $data[0];
+        }
+
         $obj = call_user_func(static::getModelClass() . "::create", $data);
         return $obj;
     }

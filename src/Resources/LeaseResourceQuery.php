@@ -165,18 +165,18 @@ class LeaseResourceQuery extends BaseResourceQuery
     }
 
     /**
-	 * Retrieve an instance of a Lease from the Rent Manager API.
+	 * Find one Lease from the Rent Manager API.
 	 * @return  \RentManager\Models\Lease
 	 */
-    public function retrieveInstance() {
-        return parent::retrieveInstance();
+    public function findOne() {
+        return parent::findOne();
     }
 
     /**
-     * Retrieve a Lease collection from the Rent Manager API.
+     * Find a Lease collection from the Rent Manager API.
      * @return  \RentManager\Models\Lease[]
      */
-    public function retrieveCollection() {
-        return parent::retrieveCollection();
+    public function find() {
+        return parent::find();
     }
 }

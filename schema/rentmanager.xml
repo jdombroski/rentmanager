@@ -51,6 +51,7 @@
     <property name="Balance" type="double" />
     <property name="Charges" type="Charge[]" />
     <property name="RecurringCharges" type="RecurringCharge[]" />
+    <property name="Payments" type="Payment[]" />
   </model>
   
   <model name="Prospect">

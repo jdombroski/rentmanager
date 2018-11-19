@@ -165,18 +165,18 @@ class LeaseRenewalResourceQuery extends BaseResourceQuery
     }
 
     /**
-	 * Retrieve an instance of a LeaseRenewal from the Rent Manager API.
+	 * Find one LeaseRenewal from the Rent Manager API.
 	 * @return  \RentManager\Models\LeaseRenewal
 	 */
-    public function retrieveInstance() {
-        return parent::retrieveInstance();
+    public function findOne() {
+        return parent::findOne();
     }
 
     /**
-     * Retrieve a LeaseRenewal collection from the Rent Manager API.
+     * Find a LeaseRenewal collection from the Rent Manager API.
      * @return  \RentManager\Models\LeaseRenewal[]
      */
-    public function retrieveCollection() {
-        return parent::retrieveCollection();
+    public function find() {
+        return parent::find();
     }
 }

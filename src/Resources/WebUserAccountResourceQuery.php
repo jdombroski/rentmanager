@@ -152,18 +152,18 @@ class WebUserAccountResourceQuery extends BaseResourceQuery
     }
 
     /**
-	 * Retrieve an instance of a WebUserAccount from the Rent Manager API.
+	 * Find one WebUserAccount from the Rent Manager API.
 	 * @return  \RentManager\Models\WebUserAccount
 	 */
-    public function retrieveInstance() {
-        return parent::retrieveInstance();
+    public function findOne() {
+        return parent::findOne();
     }
 
     /**
-     * Retrieve a WebUserAccount collection from the Rent Manager API.
+     * Find a WebUserAccount collection from the Rent Manager API.
      * @return  \RentManager\Models\WebUserAccount[]
      */
-    public function retrieveCollection() {
-        return parent::retrieveCollection();
+    public function find() {
+        return parent::find();
     }
 }

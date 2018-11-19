@@ -64,18 +64,18 @@ class {{ $resource->getModel()->getName() }}ResourceQuery extends BaseResourceQu
     }
 
     /**
-	 * Retrieve an instance of a {{ $resource->getModel()->getName() }} from the Rent Manager API.
+	 * Find one {{ $resource->getModel()->getName() }} from the Rent Manager API.
 	 * @return \{{ $resource->getModel()->getNamespace() }}\{{ $resource->getModel()->getName() }}
 	 */
-    public function retrieveInstance() {
-        return parent::retrieveInstance();
+    public function findOne() {
+        return parent::findOne();
     }
 
     /**
-     * Retrieve a {{ $resource->getModel()->getName() }} collection from the Rent Manager API.
+     * Find a {{ $resource->getModel()->getName() }} collection from the Rent Manager API.
      * @return \{{ $resource->getModel()->getNamespace() }}\{{ $resource->getModel()->getName() }}[]
      */
-    public function retrieveCollection() {
-        return parent::retrieveCollection();
+    public function find() {
+        return parent::find();
     }
 }

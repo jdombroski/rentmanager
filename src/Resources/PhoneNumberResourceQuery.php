@@ -152,18 +152,18 @@ class PhoneNumberResourceQuery extends BaseResourceQuery
     }
 
     /**
-	 * Retrieve an instance of a PhoneNumber from the Rent Manager API.
+	 * Find one PhoneNumber from the Rent Manager API.
 	 * @return  \RentManager\Models\PhoneNumber
 	 */
-    public function retrieveInstance() {
-        return parent::retrieveInstance();
+    public function findOne() {
+        return parent::findOne();
     }
 
     /**
-     * Retrieve a PhoneNumber collection from the Rent Manager API.
+     * Find a PhoneNumber collection from the Rent Manager API.
      * @return  \RentManager\Models\PhoneNumber[]
      */
-    public function retrieveCollection() {
-        return parent::retrieveCollection();
+    public function find() {
+        return parent::find();
     }
 }

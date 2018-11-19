@@ -87,18 +87,18 @@ class UserDefinedValueResourceQuery extends BaseResourceQuery
     }
 
     /**
-	 * Retrieve an instance of a UserDefinedValue from the Rent Manager API.
+	 * Find one UserDefinedValue from the Rent Manager API.
 	 * @return  \RentManager\Models\UserDefinedValue
 	 */
-    public function retrieveInstance() {
-        return parent::retrieveInstance();
+    public function findOne() {
+        return parent::findOne();
     }
 
     /**
-     * Retrieve a UserDefinedValue collection from the Rent Manager API.
+     * Find a UserDefinedValue collection from the Rent Manager API.
      * @return  \RentManager\Models\UserDefinedValue[]
      */
-    public function retrieveCollection() {
-        return parent::retrieveCollection();
+    public function find() {
+        return parent::find();
     }
 }

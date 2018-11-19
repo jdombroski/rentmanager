@@ -113,18 +113,18 @@ class UnitResourceQuery extends BaseResourceQuery
     }
 
     /**
-	 * Retrieve an instance of a Unit from the Rent Manager API.
+	 * Find one Unit from the Rent Manager API.
 	 * @return  \RentManager\Models\Unit
 	 */
-    public function retrieveInstance() {
-        return parent::retrieveInstance();
+    public function findOne() {
+        return parent::findOne();
     }
 
     /**
-     * Retrieve a Unit collection from the Rent Manager API.
+     * Find a Unit collection from the Rent Manager API.
      * @return  \RentManager\Models\Unit[]
      */
-    public function retrieveCollection() {
-        return parent::retrieveCollection();
+    public function find() {
+        return parent::find();
     }
 }
