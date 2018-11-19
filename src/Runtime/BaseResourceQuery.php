@@ -53,6 +53,7 @@ abstract class BaseResourceQuery implements Resource
     public function addEmbed($name) 
     {
         $this->embeds[] = $name;
+        return $this;
     }
 
     /**
@@ -62,6 +63,7 @@ abstract class BaseResourceQuery implements Resource
     protected function addFields($fields = []) 
     {
         $this->fields = $fields;
+        return $this;
     }
 
     /**

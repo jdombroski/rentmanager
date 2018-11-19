@@ -8,7 +8,6 @@ final class ApiTest extends TestCase
 {
     public function __construct($name = null, array $data = array(), $dataName = '')
     {
-        (new Client("trimarkp", "jeffjtd", "3557Trimark!", 2));
     }
 
     public function testTenantFindOne()
