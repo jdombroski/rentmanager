@@ -49,6 +49,7 @@
     <property name="PrimaryContact" type="Contact" />
     <property name="UserDefinedValues" type="UserDefinedValue[]" />
     <property name="Balance" type="double" />
+    <property name="Contacts" type="Contact[]" />
     <property name="Charges" type="Charge[]" />
     <property name="RecurringCharges" type="RecurringCharge[]" />
     <property name="Payments" type="Payment[]" />
