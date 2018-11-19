@@ -11,7 +11,7 @@ use DateTime;
  * @version 1.0
  * @author jdombroski
  */
-abstract class BaseModel
+abstract class BaseModel implements JsonSerializable
 {
     /**
      * Associative array for storing property values.
@@ -114,7 +114,7 @@ abstract class BaseModel
                 //  If value is a DateTime, format.
                 $serialized[$var] = $val->format("c");
 
-            } else if(in_array(static::getTypes()[$var], ["string", "integer", "bool", "double", "decimal"])) {
+            } else if(in_array(static::getTypes()[$var], ["string", "integer", "bool", "double"])) {
 
                 //  If value is a primitive then we are done.
                 $serialized[$var] = $val;
