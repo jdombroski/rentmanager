@@ -326,6 +326,19 @@ class TenantResourceQuery extends BaseResourceQuery
     
             
     /**
+    * Embed the related [Contacts] resource.
+    * @return  TenantResourceQuery
+    */
+    public function embedContacts() {
+
+        $this->addEmbed("Contacts");
+        return $this;
+    }
+    
+    
+    
+            
+    /**
     * Embed the related [Charges] resource.
     * @return  TenantResourceQuery
     */

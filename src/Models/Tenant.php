@@ -37,6 +37,7 @@ class Tenant extends BaseModel
         "PrimaryContact" => "Contact",
         "UserDefinedValues" => "UserDefinedValue[]",
         "Balance" => "double",
+        "Contacts" => "Contact[]",
         "Charges" => "Charge[]",
         "RecurringCharges" => "RecurringCharge[]",
         "Payments" => "Payment[]",
@@ -51,6 +52,8 @@ class Tenant extends BaseModel
          
              
                 return isset($this->container['TenantID']) ? $this->container['TenantID'] : null; 
+             
+         
              
          
              
@@ -541,6 +544,25 @@ class Tenant extends BaseModel
 	 */
 	public function setBalance($balance) {
         $this->container['Balance'] = $balance;
+        return $this;
+	}
+
+    
+    /**
+	 * Get the [Contacts] field.
+	 * @return  Contact[]
+	 */
+	public function getContacts() {
+        return isset($this->container['Contacts']) ? $this->container['Contacts'] : null;
+	}
+
+	/**
+	 * Set the [Contacts] field.
+     * @param    Contact[] $contacts
+     * @return  Tenant
+	 */
+	public function setContacts($contacts) {
+        $this->container['Contacts'] = $contacts;
         return $this;
 	}
 
