@@ -26,7 +26,8 @@ abstract class BaseModel implements JsonSerializable
      * Get the property => types for the model.
      * @return mixed
      */
-    public static function getTypes() {
+    public static function getTypes() 
+    {
         return static::$types;
     }
 
@@ -35,7 +36,8 @@ abstract class BaseModel implements JsonSerializable
      * @param mixed $data
      * @return mixed
      */
-    public static function create($data = []) {
+    public static function create($data = []) 
+    {
         $obj = new static;
 
         foreach($data as $prop => $val) {
@@ -77,11 +79,31 @@ abstract class BaseModel implements JsonSerializable
                 }
                 $obj->$setter($finalVal);   //  Set the final value.
             } else {
-                //throw new ErrorException("Setting does not exist for " . get_class($obj) . ": {$setter}");
+                $obj->set($prop, $val); //  Add to container without additional formatting.
             }
         }
 
         return $obj;
+    }
+
+    /**
+     * Get a property from the container.
+     * @param string $property
+     * @return mixed
+     */
+    public function get($property)
+    {
+        return $this->container[$property] ?? null;
+    }
+
+    /**
+     * Set a property in the container.
+     * @param string $property
+     * @param mixed $val
+     */
+    public function set($property, $val)
+    {
+        $this->container[$property] = $val;
     }
 
     public function jsonSerialize()
@@ -94,7 +116,8 @@ abstract class BaseModel implements JsonSerializable
      * @param mixed $array
      * @return array
      */
-    private function serialize($array) {
+    private function serialize($array) 
+    {
         $serialized = [];
 
         foreach($array as $var => $val) {
