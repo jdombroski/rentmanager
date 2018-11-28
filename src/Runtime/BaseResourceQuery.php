@@ -60,7 +60,7 @@ abstract class BaseResourceQuery implements Resource
      * Add specfic fields to a resource query.
      * @param mixed $fields
      */
-    protected function addFields($fields = []) 
+    public function addFields($fields = []) 
     {
         $this->fields = $fields;
         return $this;
