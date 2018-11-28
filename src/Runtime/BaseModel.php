@@ -93,7 +93,7 @@ abstract class BaseModel implements JsonSerializable
      */
     public function get($property)
     {
-        return $this->container[$property] ?? null;
+        return isset($this->container[$property]) ? $this->container[$property] : null;
     }
 
     /**
