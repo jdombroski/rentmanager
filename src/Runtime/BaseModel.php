@@ -38,6 +38,11 @@ abstract class BaseModel implements JsonSerializable
      */
     public static function create($data = []) 
     {
+        //  Skip hydration if the data is null.
+        if($data == null) {
+            return null;
+        }
+
         $obj = new static;
 
         foreach($data as $prop => $val) {
