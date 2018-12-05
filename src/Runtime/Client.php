@@ -6,7 +6,7 @@ use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
 use GuzzleHttp\MessageFormatter;
-use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Exception\RequestException;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 use RentManager\Runtime\Exceptions\RentManagerRuntimeException;
@@ -45,11 +45,14 @@ class Client
     /** @var array */
     private $options = [
         "debug" => false,
-        'debugFile' => null
+        'debugFile' => null,
+        'retry' => 3
     ];
 
     /** @var string */
     private $logFile;
+
+    private $retryCount = 0;
 
     public function __construct($corpId, $username, $password, $location, $options = [])
     {
@@ -162,17 +165,49 @@ class Client
 
         try {
             return $this->httpClient->request($method, $resource, $options);
-        } catch (GuzzleException $e) {
+        } catch (RequestException $e) {
 
-            //  If we got a 401, try re-authorizing.
+            //  If we got a 401, try re-authenticating.
             if($e->getCode() == 401) {
-                $this->login();
-                return $this->httpClient->request($method, $resource, $options);
+
+                if($this->hasReachedRetryLimit()) {
+                    throw new RentManagerRuntimeException("Retry limit for request has been reached.", $e->getCode());
+                } else {
+                    $this->login(); //  Re-authenticate
+                    $this->incrementRetries();  //  Increment the retries.
+                    return $this->request($method, $resource, $parameters, $body);
+                }
+
             } else {
                 throw new RentManagerRuntimeException((string) $e->getResponse()->getBody(), $e->getCode());
             }
         }
 
+    }
+
+    /**
+     * Increment the try count for the request.
+     */
+    private function incrementRetries()
+    {
+        $this->retryCount++;
+    }
+
+    /**
+     * Reset the retries made for the request.
+     */
+    private function resetRetries()
+    {
+        $this->retryCount = 0;
+    }
+
+    /**
+     * Check if the request retry limit has been reached.
+     * @return bool
+     */
+    private function hasReachedRetryLimit() 
+    {
+        return $this->retryCount >= $this->options['retry'];
     }
 
     /**
