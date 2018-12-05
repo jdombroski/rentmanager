@@ -6,6 +6,7 @@ use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
 use GuzzleHttp\MessageFormatter;
+use GuzzleHttp\Exception\GuzzleException;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 use RentManager\Runtime\Exceptions\RentManagerRuntimeException;
@@ -156,7 +157,19 @@ class Client
             $options["json"] = $body;
         }
 
-        return $this->httpClient->request($method, $resource, $options);
+        try {
+            return $this->httpClient->request($method, $resource, $options);
+        } catch (GuzzleException $e) {
+
+            //  If we got a 401, try re-authorizing.
+            if($e->getCode() == 401) {
+                $this->login();
+                return $this->httpClient->request($method, $resource, $options);
+            } else {
+                throw new RentManagerRuntimeException((string) $e->getResponse()->getBody(), $e->getCode());
+            }
+        }
+
     }
 
     /**
@@ -167,6 +180,8 @@ class Client
     {
         $this->httpHeaders[$name] = $value;
     }
+
+
 
     /**
      * Get the Rent Manager client instance.
@@ -179,5 +194,18 @@ class Client
         } else {
             return Client::$instance;
         }
+    }
+
+    /**
+     * Initialize Rent Manager service.
+     * @param string $corpId The corp id for the Rent Manager account.
+     * @param string $username The api user's username.
+     * @param string $password The api user's password.
+     * @param int $location The location id. 1 for production, 2 for sandbox.
+     * @param array $options Any additional options.
+     */
+    public static function init($corpId, $username, $password, $location, $options = [])
+    {
+        new Client($corpId, $username, $password, $location, $options);
     }
 }
