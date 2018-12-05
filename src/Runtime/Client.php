@@ -164,7 +164,11 @@ class Client
         }
 
         try {
-            return $this->httpClient->request($method, $resource, $options);
+
+            $result = $this->httpClient->request($method, $resource, $options);
+            $this->resetRetries();  //  Request succeeded, reset the retries attempted.
+            return $result;
+
         } catch (RequestException $e) {
 
             //  If we got a 401, try re-authenticating.
