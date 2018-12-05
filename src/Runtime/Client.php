@@ -16,6 +16,8 @@ use RentManager\Runtime\Exceptions\RentManagerRuntimeException;
  */
 class Client
 {
+    const AUTH_HEADER = "X-RM12Api-ApiToken";
+
     /** @var Client */
     private static $instance;
 
@@ -125,7 +127,7 @@ class Client
 
         $response = $this->request("POST", "Authentication/AuthorizeUser", null, $credentials);  //  Post the auth credentials.
         $apiToken = trim($response->getBody(), '"');    //  Get the api token from the response.
-        $this->addHttpHeader("X-RM12Api-ApiToken", $apiToken);
+        $this->addHttpHeader(self::AUTH_HEADER, $apiToken);
     }
 
     /**
@@ -163,6 +165,7 @@ class Client
 
             //  If we got a 401, try re-authorizing.
             if($e->getCode() == 401) {
+                $this->removeHttpHeader(self::AUTH_HEADER);
                 $this->login();
                 return $this->httpClient->request($method, $resource, $options);
             } else {
@@ -174,14 +177,22 @@ class Client
 
     /**
      * Add an http header.
-     * @return $this
+     * @param string $name
+     * @param string $value
      */
     public function addHttpHeader($name, $value) 
     {
         $this->httpHeaders[$name] = $value;
     }
 
-
+    /**
+     * Remove a http header.
+     * @param string $name The header name.
+     */
+    public function removeHttpHeader($name)
+    {
+        unset($this->httpHeaders[$name]);
+    }
 
     /**
      * Get the Rent Manager client instance.
