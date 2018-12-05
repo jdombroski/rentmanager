@@ -125,9 +125,10 @@ class Client
             "LocationID" => $this->location
         ];
 
+        $this->removeHttpHeader(self::AUTH_HEADER); //  Remove auth header when logging in.
         $response = $this->request("POST", "Authentication/AuthorizeUser", null, $credentials);  //  Post the auth credentials.
         $apiToken = trim($response->getBody(), '"');    //  Get the api token from the response.
-        $this->addHttpHeader(self::AUTH_HEADER, $apiToken);
+        $this->addHttpHeader(self::AUTH_HEADER, $apiToken); //  Add the auth header for future requests.
     }
 
     /**
@@ -165,7 +166,6 @@ class Client
 
             //  If we got a 401, try re-authorizing.
             if($e->getCode() == 401) {
-                $this->removeHttpHeader(self::AUTH_HEADER);
                 $this->login();
                 return $this->httpClient->request($method, $resource, $options);
             } else {
