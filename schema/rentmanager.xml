@@ -51,6 +51,7 @@
     <property name="Balance" type="double" />
     <property name="Contacts" type="Contact[]" />
     <property name="Charges" type="Charge[]" />
+    <property name="Credits" type="Credit[]" />
     <property name="RecurringCharges" type="RecurringCharge[]" />
     <property name="Payments" type="Payment[]" />
   </model>
@@ -168,6 +169,19 @@
     <property name="Amount" type="double" />
     <property name="TransactionDate" type="DateTime" />
     <property name="CreateDate" type="DateTime" />
+  </model>
+
+  <model name="Credit">
+    <property name="ID" type="integer" key="true" />
+    <property name="AccountID" type="integer" />
+    <property name="ChargeTypeID" type="integer" />
+    <property name="TransactionType" type="string" />
+    <property name="CreateDate" type="DateTime" />
+    <property name="UpdateDate" type="DateTime" />
+    <property name="TransactionDate" type="DateTime" />
+    <property name="Reference" type="string" />
+    <property name="Comment" type="string" />
+    <property name="Amount" type="double" />
   </model>
 
   <model name="RecurringCharge">

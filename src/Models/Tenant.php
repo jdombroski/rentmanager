@@ -39,6 +39,7 @@ class Tenant extends BaseModel
         "Balance" => "double",
         "Contacts" => "Contact[]",
         "Charges" => "Charge[]",
+        "Credits" => "Credit[]",
         "RecurringCharges" => "RecurringCharge[]",
         "Payments" => "Payment[]",
         ];
@@ -52,6 +53,8 @@ class Tenant extends BaseModel
          
              
                 return isset($this->container['TenantID']) ? $this->container['TenantID'] : null; 
+             
+         
              
          
              
@@ -582,6 +585,25 @@ class Tenant extends BaseModel
 	 */
 	public function setCharges($charges) {
         $this->container['Charges'] = $charges;
+        return $this;
+	}
+
+    
+    /**
+	 * Get the [Credits] field.
+	 * @return  Credit[]
+	 */
+	public function getCredits() {
+        return isset($this->container['Credits']) ? $this->container['Credits'] : null;
+	}
+
+	/**
+	 * Set the [Credits] field.
+     * @param    Credit[] $credits
+     * @return  Tenant
+	 */
+	public function setCredits($credits) {
+        $this->container['Credits'] = $credits;
         return $this;
 	}
 

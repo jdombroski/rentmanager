@@ -352,6 +352,19 @@ class TenantResourceQuery extends BaseResourceQuery
     
             
     /**
+    * Embed the related [Credits] resource.
+    * @return  TenantResourceQuery
+    */
+    public function embedCredits() {
+
+        $this->addEmbed("Credits");
+        return $this;
+    }
+    
+    
+    
+            
+    /**
     * Embed the related [RecurringCharges] resource.
     * @return  TenantResourceQuery
     */
