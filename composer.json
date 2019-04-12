@@ -8,10 +8,10 @@
        }
     },
     "require": {
-        "guzzlehttp/guzzle": "^6.3@dev",
+        "guzzlehttp/guzzle": "^6.3",
         "jenssegers/blade": "dev-master",
-        "monolog/monolog": "1.x-dev",
-        "symfony/yaml": "3.4.x-dev"
+        "monolog/monolog": "1.*",
+        "symfony/yaml": "3.4.*"
     },
     "config": {
         "platform": {
