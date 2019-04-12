@@ -52,6 +52,8 @@ class Client
     /** @var string */
     private $logFile;
 
+    private $initialLogin = false;
+
     private $retryCount = 0;
 
     public function __construct($corpId, $username, $password, $location, $options = [])
@@ -67,7 +69,7 @@ class Client
         }
 
         $this->initHttpClient();
-        $this->login();
+        //$this->login();
 
         Client::$instance = $this;
     }
@@ -132,6 +134,11 @@ class Client
         $response = $this->request("POST", "Authentication/AuthorizeUser", null, $credentials);  //  Post the auth credentials.
         $apiToken = trim($response->getBody(), '"');    //  Get the api token from the response.
         $this->addHttpHeader(self::AUTH_HEADER, $apiToken); //  Add the auth header for future requests.
+
+        //  Set the initial login value to true.
+        if(!$this->initialLogin) {
+            $this->initialLogin = true;
+        }
     }
 
     /**
@@ -143,6 +150,9 @@ class Client
      */
     public function request($method, $resource, $parameters = null, $body = null) 
     {
+        if(!$this->initialLogin) {
+            $this->login();
+        }
 
         $options = [
             "headers" => $this->httpHeaders
