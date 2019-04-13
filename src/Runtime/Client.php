@@ -52,7 +52,8 @@ class Client
     /** @var string */
     private $logFile;
 
-    private $initialLogin = false;
+    private $isLoggedIn = false;
+    private $loggingIn = false;
 
     private $retryCount = 0;
 
@@ -124,6 +125,8 @@ class Client
      */
     private function login()
     {
+        $this->loggingIn = true;
+
         $credentials = [
             "Username" => $this->username,
             "Password" => $this->password,
@@ -136,9 +139,8 @@ class Client
         $this->addHttpHeader(self::AUTH_HEADER, $apiToken); //  Add the auth header for future requests.
 
         //  Set the initial login value to true.
-        if(!$this->initialLogin) {
-            $this->initialLogin = true;
-        }
+        $this->loggingIn = false;
+        $this->isLoggedIn = true;
     }
 
     /**
@@ -150,7 +152,8 @@ class Client
      */
     public function request($method, $resource, $parameters = null, $body = null) 
     {
-        if(!$this->initialLogin) {
+        //  Login on initial request.
+        if(!$this->loggingIn && !$this->isLoggedIn) {
             $this->login();
         }
 
