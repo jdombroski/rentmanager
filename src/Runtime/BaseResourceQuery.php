@@ -101,6 +101,9 @@ abstract class BaseResourceQuery implements Resource
             case "=":
                 $operationString = "eq";
                 break;
+            case 'Not In':
+                $operationString = "ni";
+                break;
         }
 
         //  Convert array to list
