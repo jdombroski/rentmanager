@@ -8,15 +8,13 @@
        }
     },
     "require": {
+        "php": ">=7.2",
         "guzzlehttp/guzzle": "^6.3",
         "jenssegers/blade": "1.1.0",
         "monolog/monolog": "1.*",
         "symfony/yaml": "3.4.*"
     },
     "config": {
-        "platform": {
-            "php": "5.6.4"
-        },
         "preferred-install": "dist",
         "sort-packages": true
     },
