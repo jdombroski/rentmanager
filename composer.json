@@ -10,7 +10,7 @@
     "require": {
         "php": ">=5.6",
         "guzzlehttp/guzzle": "^6.3",
-        "monolog/monolog": "1.*",
+        "monolog/monolog": "2.*",
         "symfony/yaml": "3.4.*"
     },
     "config": {
