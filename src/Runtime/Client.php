@@ -19,43 +19,34 @@ class Client
     const AUTH_HEADER = "X-RM12Api-ApiToken";
 
     /** @var Client */
-    private static $instance;
+    protected static $instance;
 
     /** @var string */
-    private $corpId;   
+    protected $corpId;   
 
     /** @var string */
-    private $username;
+    protected $username;
 
     /** @var string */
-    private $password;
+    protected $password;
 
     /** @var int */
-    private $location;
+    protected $location;
 
     /** @var HttpClient */
-    private $httpClient;
+    protected $httpClient;
 
     /** @var HandlerStack */
-    private $handlerStack;
+    protected $handlerStack;
 
     /** @var array */
-    private $httpHeaders = [];
-
-    /** @var array */
-    private $options = [
+    protected $options = [
         "debug" => false,
-        'debugFile' => null,
-        'retry' => 3
+        'debugFile' => null
     ];
 
     /** @var string */
-    private $logFile;
-
-    private $isLoggedIn = false;
-    private $loggingIn = false;
-
-    private $retryCount = 0;
+    protected $logFile;
 
     protected $token;
 
@@ -72,7 +63,6 @@ class Client
         }
 
         $this->initHttpClient();
-        //$this->login();
 
         Client::$instance = $this;
     }
@@ -81,7 +71,7 @@ class Client
      * Initialize the http client.
      * @return void
      */
-    private function initHttpClient()
+    protected function initHttpClient()
     {
         $httpClient = new HttpClient([
             "base_uri" => "https://{$this->corpId}.api.rentmanager.com/",
@@ -95,7 +85,7 @@ class Client
      * Get the handler for the http client.
      * @return HandlerStack
      */
-    private function getHandler()
+    protected function getHandler()
     {
         if(!isset($this->handlerStack)) {
 
@@ -122,28 +112,28 @@ class Client
 
     /**
      * Login to the rent manager api. 
-     * This will set the api token header needed for future requests.
-     * @return void
+     * This returns the api token needed to make requests.
+     * @return string
      */
-    private function login()
+    protected function login()
     {
-        $this->loggingIn = true;
-
         $credentials = [
             "Username" => $this->username,
             "Password" => $this->password,
             "LocationID" => $this->location
         ];
 
-        $this->removeHttpHeader(self::AUTH_HEADER); //  Remove auth header when logging in.
-        $response = $this->request("POST", "Authentication/AuthorizeUser", null, $credentials);  //  Post the auth credentials.
+        $response = $this->httpClient->request("POST", "Authentication/AuthorizeUser", ['json' => $credentials]);  //  Post the auth credentials.
         $apiToken = trim($response->getBody(), '"');    //  Get the api token from the response.
-        $this->addHttpHeader(self::AUTH_HEADER, $apiToken); //  Add the auth header for future requests.
-        $this->token = $apiToken;
+        return $apiToken;
+    }
 
-        //  Set the initial login value to true.
-        $this->loggingIn = false;
-        $this->isLoggedIn = true;
+    /**
+     * Log out of the rent manager api with a token.
+     */
+    protected function logout($token) 
+    {
+        $this->httpClient->post("/Authentication/DeAuthorize?token={$token}");
     }
 
     /**
@@ -155,13 +145,10 @@ class Client
      */
     public function request($method, $resource, $parameters = null, $body = null) 
     {
-        //  Login on initial request.
-        if(!$this->loggingIn && !$this->isLoggedIn) {
-            $this->login();
-        }
+        $token = $this->login();
 
         $options = [
-            "headers" => $this->httpHeaders
+            "headers" => [self::AUTH_HEADER => $token]
         ];
 
         //  Add handler if the client is debugging.
@@ -180,73 +167,13 @@ class Client
         }
 
         try {
-
-            $result = $this->httpClient->request($method, $resource, $options);
-            $this->resetRetries();  //  Request succeeded, reset the retries attempted.
-            return $result;
-
+            return $this->httpClient->request($method, $resource, $options);
         } catch (RequestException $e) {
-
-            //  If we got a 401, try re-authenticating.
-            if($e->getCode() == 401) {
-
-                if($this->hasReachedRetryLimit()) {
-                    throw new RentManagerRuntimeException("Retry limit for request has been reached.", $e->getCode());
-                } else {
-                    $this->login(); //  Re-authenticate
-                    $this->incrementRetries();  //  Increment the retries.
-                    return $this->request($method, $resource, $parameters, $body);
-                }
-
-            } else {
-                throw new RentManagerRuntimeException((string) $e->getResponse()->getBody(), $e->getCode());
-            }
+            throw new RentManagerRuntimeException((string) $e->getResponse()->getBody(), $e->getCode());
+        } finally {
+            $this->logout($token);
         }
 
-    }
-
-    /**
-     * Increment the try count for the request.
-     */
-    private function incrementRetries()
-    {
-        $this->retryCount++;
-    }
-
-    /**
-     * Reset the retries made for the request.
-     */
-    private function resetRetries()
-    {
-        $this->retryCount = 0;
-    }
-
-    /**
-     * Check if the request retry limit has been reached.
-     * @return bool
-     */
-    private function hasReachedRetryLimit() 
-    {
-        return $this->retryCount >= $this->options['retry'];
-    }
-
-    /**
-     * Add an http header.
-     * @param string $name
-     * @param string $value
-     */
-    public function addHttpHeader($name, $value) 
-    {
-        $this->httpHeaders[$name] = $value;
-    }
-
-    /**
-     * Remove a http header.
-     * @param string $name The header name.
-     */
-    public function removeHttpHeader($name)
-    {
-        unset($this->httpHeaders[$name]);
     }
 
     /**
@@ -260,11 +187,6 @@ class Client
         } else {
             return Client::$instance;
         }
-    }
-
-    public function __destruct()
-    {
-        $this->request("POST", "Authentication/DeAuthorize", ['token' => $this->token]);  //  Post the auth credentials.
     }
 
     /**
