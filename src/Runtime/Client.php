@@ -57,6 +57,8 @@ class Client
 
     private $retryCount = 0;
 
+    protected $token;
+
     public function __construct($corpId, $username, $password, $location, $options = [])
     {
         $this->corpId   = $corpId;
@@ -137,6 +139,7 @@ class Client
         $response = $this->request("POST", "Authentication/AuthorizeUser", null, $credentials);  //  Post the auth credentials.
         $apiToken = trim($response->getBody(), '"');    //  Get the api token from the response.
         $this->addHttpHeader(self::AUTH_HEADER, $apiToken); //  Add the auth header for future requests.
+        $this->token = $apiToken;
 
         //  Set the initial login value to true.
         $this->loggingIn = false;
@@ -257,6 +260,11 @@ class Client
         } else {
             return Client::$instance;
         }
+    }
+
+    public function __destruct()
+    {
+        $this->request("POST", "Authentication/DeAuthorize", ['token' => $this->token]);  //  Post the auth credentials.
     }
 
     /**
