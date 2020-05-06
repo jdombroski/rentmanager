@@ -1,5 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <models>
+
+  <model name="Address">
+    <property name="AddressID" type="integer" key="true" />
+    <property name="AddressTypeID" type="integer" />
+    <property name="Address" type="string" />
+    <property name="Street" type="string" />
+    <property name="City" type="string" />
+    <property name="State" type="string" />
+    <property name="PostalCode" type="string" />
+    <property name="IsPrimary" type="bool" />
+    <property name="IsBilling" type="bool" />
+    <property name="ParentID" type="integer" />
+    <property name="MetaTag" type="string" />
+  </model>
   
   <model name="Property">
     <property name="PropertyID" type="integer" key="true" />
